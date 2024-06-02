@@ -1,0 +1,17 @@
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 0 20px;
+}
+
+.link {
+    text-decoration: none;
+    color: #181818;
+    border-bottom: 1px solid #00000000;
+    transition: .3s;
+}
+
+.active {
+    color: #000;
+    border-bottom: 1px solid #181818;
+}
