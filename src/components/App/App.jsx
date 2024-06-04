@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Navigation from "../Navigation/Navigation";
+import Loading from "../Loading/Loading";
 
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 const MoviesPage = lazy(() => import("../../pages/MoviesPage/MoviesPage"));
@@ -21,12 +22,12 @@ export default function App() {
   return (
     <>
       <header className={css.header}>
-        <h1 className={css.title}>Кінопошук</h1>
+        <h1 className={css.title}>Kinoposhuk</h1>
         <Navigation />
       </header>
 
       <main className={css.content}>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<HomePage />}></Route>
             <Route path="/movies" element={<MoviesPage />}></Route>

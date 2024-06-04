@@ -1,8 +1,9 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { fetchTrendingMovies } from "../../movies_api.js";
 
 import MoviesList from "../../components/MoviesList/MoviesList";
+import Loading from "../../components/Loading/Loading";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage.jsx";
 
 import css from "./HomePage.module.css";
 
@@ -29,12 +30,10 @@ export default function HomePage() {
 
   return (
     <>
-      <h2>Trending today</h2>
-      {movies.length > 0 && (
-        <ul className={css.list}>
-          <MoviesList movies={movies} />
-        </ul>
-      )}
+      <h2 className={css.title}>Trending today</h2>
+      {loading && <Loading />}
+      {movies.length > 0 && !error && <MoviesList movies={movies} />}
+      {error && <ErrorMessage />}
     </>
   );
 }
