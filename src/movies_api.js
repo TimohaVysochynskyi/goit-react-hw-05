@@ -23,3 +23,14 @@ export const fetchMoviesByName = async (name) => {
 export const fetchMovieDetails = async (id) => {
   return axios.get(`${baseUrl}movie/${id}?language=en-US`, options);
 };
+
+export const fetchMovieCast = async (id) => {
+  return axios.get(`${baseUrl}movie/${id}/credits?language=en-US`, options);
+};
+
+export const fetchMovieReviews = async (id) => {
+  return axios.get(
+    `${baseUrl}movie/${id}/reviews?language=en-US&page=1`,
+    options
+  );
+};

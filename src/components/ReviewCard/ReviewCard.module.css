@@ -1,0 +1,32 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px 0;
+    padding: 10px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.image {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 32px;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: .5px;
+}
+
+.content {
+    overflow-y: scroll;
+    font-size: 18px;
+}

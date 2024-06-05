@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+
 import { fetchMoviesByName } from "../../movies_api.js";
 
 import MoviesList from "../../components/MoviesList/MoviesList";
 import Loading from "../../components/Loading/Loading";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+import SearchBar from "../../components/SearchBar/SearchBar.jsx";
 
 import css from "./MoviesPage.module.css";
 
@@ -12,35 +15,34 @@ export default function MoviesPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const name = event.target.elements.input.value;
-    try {
-      setLoading(true);
-      const response = await fetchMoviesByName(name);
-      setMovies(response.data.results);
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
+  const [searchParams, setSearchParams] = useSearchParams();
+  const nameFilter = searchParams.get("name") ?? "";
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        setLoading(true);
+        const response = await fetchMoviesByName(nameFilter);
+        setMovies(response.data.results);
+      } catch (error) {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMovies();
+  }, [nameFilter]);
+
+  const changeNameFilter = (newNameFilter) => {
+    newNameFilter === ""
+      ? searchParams.delete("name")
+      : searchParams.set("name", newNameFilter);
+    setSearchParams(searchParams);
   };
 
   return (
     <>
-      <form className={css.form} onSubmit={handleSubmit}>
-        <h2 className={css.title}>Find a movie</h2>
-        <input
-          type="text"
-          name="input"
-          className={css.input}
-          placeholder="Enter movie name.."
-        />
-        <button className={css.btn} type="submit">
-          Find
-        </button>
-      </form>
-
+      <SearchBar onSearch={changeNameFilter} />
       {loading && <Loading />}
       {movies.length > 0 && !error && <MoviesList movies={movies} />}
       {error && <ErrorMessage />}
