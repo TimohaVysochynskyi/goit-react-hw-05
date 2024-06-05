@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 
 import { fetchMoviesByName } from "../../movies_api.js";
 
-import MoviesList from "../../components/MoviesList/MoviesList";
+import MovieList from "../../components/MovieList/MovieList";
 import Loading from "../../components/Loading/Loading";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import SearchBar from "../../components/SearchBar/SearchBar.jsx";
@@ -44,7 +44,7 @@ export default function MoviesPage() {
     <>
       <SearchBar onSearch={changeNameFilter} />
       {loading && <Loading />}
-      {movies.length > 0 && !error && <MoviesList movies={movies} />}
+      {movies.length > 0 && !error && <MovieList movies={movies} />}
       {error && <ErrorMessage />}
     </>
   );
